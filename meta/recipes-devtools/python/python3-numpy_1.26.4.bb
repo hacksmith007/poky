@@ -23,6 +23,9 @@ DEPENDS += "python3-cython-native"
 inherit ptest setuptools3 github-releases
 
 S = "${WORKDIR}/numpy-${PV}"
+# numpy built with setuptools fails to build correctly when out-of-tree, so
+# until we switch to mesonpy we need this.
+B = "${S}/build"
 
 CLEANBROKEN = "1"
 
