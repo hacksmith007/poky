@@ -9,8 +9,6 @@ inherit pypi setuptools3
 
 S = "${WORKDIR}/babel-${PV}"
 
-CLEANBROKEN = "1"
-
 RDEPENDS:${PN} += " \
     python3-codecs \
     python3-difflib \

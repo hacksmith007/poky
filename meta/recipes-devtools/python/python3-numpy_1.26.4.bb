@@ -27,8 +27,6 @@ S = "${WORKDIR}/numpy-${PV}"
 # until we switch to mesonpy we need this.
 B = "${S}/build"
 
-CLEANBROKEN = "1"
-
 do_compile:prepend() {
     export NPY_DISABLE_SVML=1
 }

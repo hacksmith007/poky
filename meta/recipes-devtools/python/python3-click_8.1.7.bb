@@ -29,8 +29,6 @@ do_install_ptest() {
 
 UPSTREAM_CHECK_REGEX = "click/(?P<pver>\d+(\.\d+)+)/"
 
-CLEANBROKEN = "1"
-
 RDEPENDS:${PN} += "\
     python3-io \
     python3-threading \
