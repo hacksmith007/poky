@@ -12,6 +12,8 @@ SETUPTOOLS_BUILD_ARGS ?= ""
 
 SETUPTOOLS_SETUP_PATH ?= "${S}"
 
+B = "${WORKDIR}/build"
+
 python do_check_backend() {
     import re
     filename = d.expand("${SETUPTOOLS_SETUP_PATH}/pyproject.toml")
@@ -29,8 +31,18 @@ addtask check_backend after do_patch before do_configure
 setuptools3_do_configure() {
     :
 }
+do_configure[cleandirs] += "${B}"
 
 setuptools3_do_compile() {
+        # Write an extra config file to build in parallel
+        export DIST_EXTRA_CONFIG=${WORKDIR}/setuptools-extra.cfg
+        cat <<EOF >$DIST_EXTRA_CONFIG
+[build]
+build_base = ${B}
+[build_ext]
+parallel = ${@oe.utils.parallel_make(d)}
+EOF
+
         cd ${SETUPTOOLS_SETUP_PATH}
         NO_FETCH_BUILD=1 \
         STAGING_INCDIR=${STAGING_INCDIR} \
