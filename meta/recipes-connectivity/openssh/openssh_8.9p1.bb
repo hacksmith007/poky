@@ -137,6 +137,11 @@ do_install:append () {
 	echo "HostKey /var/run/ssh/ssh_host_rsa_key" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
 	echo "HostKey /var/run/ssh/ssh_host_ecdsa_key" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
 	echo "HostKey /var/run/ssh/ssh_host_ed25519_key" >> ${D}${sysconfdir}/ssh/sshd_config_readonly
+	echo "Port 830" >> ${D}${sysconfdir}/ssh/sshd_config
+    # Insert the netconf subsystem line
+    echo "Subsystem netconf /usr/sbin/netconf-subsystem --ncxserver-sockname=830@/tmp/ncxserver.sock" >> ${D}${sysconfdir}/ssh/sshd_config
+	echo "PermitEmptyPasswords yes" >> ${D}${sysconfdir}/ssh/sshd_config
+	echo "PermitRootLogin yes" >> ${D}${sysconfdir}/ssh/sshd_config
 
 	install -d ${D}${systemd_system_unitdir}
 	install -c -m 0644 ${WORKDIR}/sshd.socket ${D}${systemd_system_unitdir}
